@@ -1,0 +1,6 @@
+﻿CREATE PROCEDURE GetLatestProducts
+AS
+BEGIN
+    SELECT TOP 20 * FROM Products
+    ORDER BY ProductID DESC
+END

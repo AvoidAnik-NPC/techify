@@ -1,0 +1,8 @@
+CREATE PROCEDURE Laptopfiltering
+AS
+BEGIN
+    SELECT * 
+    FROM Product 
+    INNER JOIN Category ON Product.CategoryID = Category.CategoryID 
+    WHERE Category.CategoryName = 'Laptop';
+END;
