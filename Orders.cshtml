@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Techify.Models.Order>
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Seller/Seller_Dashboard_Layout.cshtml";
+}
+
+<div class="card" style="background: linear-gradient(145deg, #1a1a1a, #333333); color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
+    <div class="card-body">
+        <label class="card-title" style="display: block; width: 100%; margin-bottom: 20px; text-align: center; font-size: 28px; color: #ffffff; background-color: #36454F; padding: 15px 0; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);">
+            <i class="fa fa-receipt" style="vertical-align: middle;"></i> Orders
+        </label>
+        <h4>Search by:</h4>
+
+        <form method="get" action="@Url.Action("Orders")" class="form-inline" style="margin-bottom: 20px; display: flex; justify-content: center;">
+            <div style="flex-grow: 1; display: flex; align-items: center;">
+                <input type="number" name="orderId" class="form-control mb-2 mr-sm-2" placeholder="Order ID" style="margin-right: 10px; background-color: #2a2a2a; color: #ffffff; border: none; border-radius: 4px;">
+                <button type="submit" class="btn btn-primary mb-2" style="background: linear-gradient(145deg, #C70039, #900028); border: none; color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div style="flex-grow: 1; display: flex; align-items: center;">
+                <input type="date" name="orderDate" class="form-control mb-2 mr-sm-2"placeholder="Order Date" style="margin-right: 10px; background-color: #2a2a2a; color: #ffffff; border: none; border-radius: 4px;">
+                <button type="submit" class="btn btn-primary mb-2" style="background: linear-gradient(145deg, #C70039, #900028); border: none; color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div style="flex-grow: 1; display: flex; align-items: center;">
+                <select name="status" class="form-control mb-2 mr-sm-2" style="margin-right: 10px; background-color: #2a2a2a; color: #ffffff; border: none; border-radius: 4px;">
+                    <option value="">Select Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                </select>
+                <button type="submit" class="btn btn-primary mb-2" style="background: linear-gradient(145deg, #C70039, #900028); border: none; color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-hover" style="background-color: #212529; color: #ffffff; border-collapse: collapse; border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background-color: #343a40;">
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #ffffff;">Order ID</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #ffffff;">Order Date</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #ffffff;">Total Amount</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #ffffff;">Status</th>
+                        <th style="padding: 12px 10px; border-bottom: 2px solid #ffffff;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr style="border-top: 1px solid #343a40;">
+                            <td style="padding: 10px 8px;">@order.OrderID</td>
+                            <td style="padding: 10px 8px;">@order.OrderDate</td>
+                            <td style="padding: 10px 8px;">@order.TotalAmount</td>
+                            <td style="padding: 10px 8px;">@order.Status</td>
+                            <td style="padding: 10px 8px;">
+                                <a href="@Url.Action("OrderDetails1", new { orderId = order.OrderID })" class="btn btn-primary btn-action" style="background: linear-gradient(145deg, #C70039, #900028); border: none; color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                                    <i class="fa fa-eye" style="vertical-align: middle;"></i> View Details
+                                </a>
+                                @if (order.Status != "Completed")
+                                {
+                                    <form action="@Url.Action("UpdateOrderStatus")" method="post" style="display:inline;">
+                                        <input type="hidden" name="orderId" value="@order.OrderID" />
+                                        <input type="hidden" name="status" value="Completed" />
+                                        <button type="submit" class="btn btn-success btn-action" style="background: linear-gradient(145deg, #28a745, #218838); border: none; color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                                            <i class="fa fa-check-circle" style="vertical-align: middle;"></i> Mark as Completed
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        .btn-action {
+            width: 150px;
+            text-align: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
+
+        table thead th {
+            padding: 12px 10px;
+            font-weight: bold;
+        }
+
+        table tbody td {
+            padding: 10px 8px;
+            border-top: 1px solid #343a40;
+        }
+
+        table tbody tr:hover {
+            background-color: #2a2a2a;
+        }
+    </style>
+</div>

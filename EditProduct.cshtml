@@ -1,0 +1,155 @@
+﻿@model Techify.Models.ProductDetails
+
+@{
+    ViewBag.Title = "Edit Product";
+    Layout = null;
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    body {
+        background-color: black;
+        color: #e0e0e0;
+    }
+
+    .container {
+        max-width: 1400px; /* Increased max-width for more screen width usage */
+    }
+
+    .card {
+        background-color: #171614; /* Dark gray for contrast with body */
+        border: none;
+        border-radius: 8px;
+        padding: 30px; /* Increased padding for a more spacious look */
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        background-color: #16161d; /* Slightly lighter gray for better readability */
+        color: #e0e0e0;
+        border: 1px solid #555; /* Lighter border for contrast */
+        border-radius: 4px;
+    }
+
+        .form-control:focus {
+            background-color: #3a3a3a;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-default {
+        background-color: #555;
+        border: none;
+    }
+
+        .btn-default:hover {
+            background-color: #6c757d;
+        }
+
+    .form-group img {
+        display: block;
+        margin-top: 10px;
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    .card-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #e0e0e0;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #e0e0e0;
+    }
+</style>
+
+
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="text-center">Edit Product</h3>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("EditProduct", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(model => model.ProductID)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description)
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price)
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StockQuantity)
+                    @Html.TextBoxFor(model => model.StockQuantity, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StockQuantity, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryID, "Category")
+                    @Html.DropDownListFor(model => model.CategoryID, Model.Categories, "Select Category", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BrandID, "Brand")
+                    @Html.DropDownListFor(model => model.BrandID, Model.Brands, "Select Brand", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SellerID, "Seller")
+                    @Html.DropDownListFor(model => model.SellerID, Model.Sellers, "Select Seller", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SellerID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ImageURL, "Current Image")
+                    @if (!string.IsNullOrEmpty(Model.ImageURL))
+                    {
+                        <img src="@Url.Content(Model.ImageURL)" alt="Product Image" class="img-thumbnail" />
+                    }
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ImageURL, "New Image")
+                    <input type="file" name="productImage" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="@Url.Action("Product", "Seller")" class="btn btn-default">Cancel</a>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
