@@ -1,0 +1,128 @@
+﻿@model Techify.Models.SellerDetails
+
+@{
+    ViewBag.Title = "Update Seller";
+    Layout = "~/Views/Admin/Admin_Dashboard.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .card-header {
+        background-color: #007bff; /* Blue color */
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .form-label {
+        color: #007bff; /* Blue color for labels */
+        font-size: 1.1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        font-size: 1.1rem;
+        padding: 0.5rem 1.5rem;
+    }
+
+    .btn-outline-danger {
+        border-color: #dc3545;
+        color: #dc3545;
+        font-size: 1.1rem;
+        padding: 0.5rem 1.5rem;
+    }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+    .form-control {
+        border-radius: 0.25rem;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+    .card-footer {
+        border-top: 1px solid #dee2e6;
+        background-color: white;
+    }
+
+    .icon {
+        margin-right: 0.5rem;
+    }
+
+    .btn-icon {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="card border-light shadow-sm mt-4">
+        <div class="card-header">
+            <i class="icon fas fa-plus-circle"></i> Add New Seller
+        </div>
+        <div class="card-body p-5">
+            @using (Html.BeginForm("SaveSeller", "Admin", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.SellerID)
+
+                <div class="form-group mb-4">
+                    <label class="form-label font-weight-bold">Seller Name</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control form-control-lg", placeholder = "Enter seller name", required = "required", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger mt-1" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label font-weight-bold">Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", placeholder = "Enter email address", required = "required", type = "email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger mt-1" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label font-weight-bold">Password</label>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-lg", placeholder = "Enter password", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger mt-1" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label font-weight-bold">Address</label>
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control form-control-lg", placeholder = "Enter address", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger mt-1" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label font-weight-bold">Phone Number</label>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-lg", placeholder = "Enter phone number", required = "required" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger mt-1" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label font-weight-bold">Branch Name</label>
+                    @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control form-control-lg", placeholder = "Enter branch name" })
+                    @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger mt-1" })
+                </div>
+
+                <div class="card-footer d-flex justify-content-end">
+                    <a onclick="window.history.back()" class="btn btn-outline-danger btn-icon me-2">
+                        <i class="icon fas fa-times-circle"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-icon">
+                        <i class="icon fas fa-save"></i> Save
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
