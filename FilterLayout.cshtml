@@ -1,0 +1,246 @@
+﻿
+@using Techify.Models.Home
+@{
+    bool isLoggedIn = true;
+    if (string.IsNullOrWhiteSpace(User.Identity.Name))
+    {
+        isLoggedIn = false;
+    }
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Techify </title>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/bootstrap.min.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/nouislider.min.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="../../User_Template/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/style.css" />
+
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-map-marker"></i> 221B Baker Street Road</a></li>
+                    <li><a href="tel:+880135168481"><i class="fa fa-phone"></i> +880-1351-68481</a></li>
+                    <li><a href="mailto:techify@gmail.com"><i class="fa fa-envelope-o"></i> techify@gmail.com</a></li>
+                </ul>
+                <ul class="header-links pull-right">
+
+                    @{
+                        if (isLoggedIn)
+                        {
+                            <li><a href="@Url.Action("MyOrders", "Home")"><i class="fa fa-dollar"></i> My Orders</a></li>
+
+                            <li><a href="/Account/Customer_Logout"><i class="fa fa-user-o"></i> Logout</a></li>
+
+                        }
+                        else
+                        {
+
+                            <li><a href="/Account/Customer_login"><i class="fa fa-user-o"></i> My Account</a></li>
+
+
+                        }
+                    }
+
+
+                    @*<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>*@
+                </ul>
+            </div>
+        </div>
+        <!-- /TOP HEADER -->
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="@Url.Action("Index", "Home")" class="logo">
+                                <img src="../../User_Template/img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+                    <!-- Search bar -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form action="@Url.Action("SearchResult", "Home")" method="post" class="form-inline">
+                                <input type="text" name="search" placeholder="Search here" class="input" style="border-radius: 40px 0 0 40px; width: 80%;">
+                                <button class="search-btn" style="border-radius: 0 40px 40px 0; width: 20%;">Search</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- /SEARCH BAR -->
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+
+
+                    <li><a href="@Url.Action("DesktopFilter", "Home")">Components</a></li>
+
+
+                    <li><a href="@Url.Action("TabletFilter", "Home")">Tablets</a></li>
+
+
+
+                    <li><a href="@Url.Action("KeyboardFilter", "Home")">Keyboards</a></li>
+
+                    <li><a href="@Url.Action("MouseFilter", "Home")">Mouses</a></li>
+                    <li><a href="@Url.Action("IEMFilter", "Home")">IEMS</a></li>
+
+
+                    @*<li><a href="@Url.Action("Checkout", "Home")" style="color: white; display: block; padding: 10px; text-decoration: none;">Check Out</a></li>*@
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <!-- NEWSLETTER -->
+       
+        <!-- FOOTER -->
+        <footer id="footer">
+            <!-- top footer -->
+            <div class="section">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-md-3 col-xs-6">
+                            <div class="footer">
+                                <h3 class="footer-title">About Us</h3>
+                                <p>Discover Techify, your go-to tech shop for the latest laptops, PC components, keyboards, mice, headphones, and tablets. Enjoy top-quality products and outstanding customer service. Shop with us for unbeatable deals and elevate your tech experience today!s</p>
+                                <ul class="footer-links">
+                                    <li><a href="#"><i class="fa fa-map-marker"></i> 221B Baker Street Road</a></li>
+                                    <li><a href="tel:+880135168481"><i class="fa fa-phone"></i> +880-1351-68481</a></li>
+                                    <li><a href="mailto:techify@gmail.com"><i class="fa fa-envelope-o"></i> techify@gmail.com</a></li>
+
+
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-xs-6">
+                            <div class="footer">
+                                <h3 class="footer-title">Categories</h3>
+                                <ul class="footer-links">
+
+
+                                    <li><a href="@Url.Action("TabletFilter", "Home")">Tablets</a></li>
+
+
+
+                                    <li><a href="@Url.Action("KeyboardFilter", "Home")">Keyboards</a></li>
+
+                                    <li><a href="@Url.Action("MouseFilter", "Home")">Mouses</a></li>
+                                    <li><a href="@Url.Action("IEMFilter", "Home")">IEMS</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="clearfix visible-xs"></div>
+
+                        <div class="col-md-3 col-xs-6">
+                            <div class="footer">
+                                <h3 class="footer-title">Information</h3>
+                                <ul class="footer-links">
+                                    <li><a href="@Url.Action("AboutUs", "Admin")">About Us</a></li>
+                                    <li><a href="@Url.Action("ContactUs", "Admin")">Contact Us</a></li>
+                                    <li><a href="@Url.Action("PrivacyPolicy", "Admin")">Privacy Policy</a></li>
+                                    <li><a href="@Url.Action("TermsConditions", "Admin")">Terms & Conditions</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-xs-6">
+                            <div class="footer">
+                                <h3 class="footer-title">Service</h3>
+                                <ul class="footer-links">
+                                    <li><a href="/Account/Customer_login">My Account</a></li>
+
+                                    @*<li><a href="@Url.Action("MyOrders", "Home")">Track My Order</a></li>*@
+                                    <li><a href="@Url.Action("Help", "Admin")">Help</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /top footer -->
+         
+        </footer>
+        <!-- /FOOTER -->
+        <!-- jQuery Plugins -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/slick.min.js"></script>
+        <script src="js/nouislider.min.js"></script>
+        <script src="js/jquery.zoom.min.js"></script>
+        <script src="js/main.js"></script>
+
+
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

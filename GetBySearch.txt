@@ -1,0 +1,12 @@
+CREATE PROCEDURE GetBySearch
+	@search nvarchar(max)=null
+AS
+BEGIN
+	SELECT *from[dbo].[Product] P
+	left join [dbo].Category C on p.CategoryID = c.CategoryID
+	where
+	P.Name LIKE CASE WHEN @search is not null then '%' + @search + '%' else P.Name end 
+	OR
+	C.CategoryName LIKE CASE WHEN @search is not null then '%' + @search + '%' else C.CategoryName end
+END 
+GO
