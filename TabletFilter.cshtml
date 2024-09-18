@@ -1,0 +1,254 @@
+﻿@model Techify.Models.Home.HomeIndexViewModel
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "TabletFilter";
+    Layout = "~/Views/Shared/FilterLayout.cshtml";
+}
+<br />
+<h2>Tablets</h2>
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @Html.Raw(TempData["SuccessMessage"].ToString())
+    </div>
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+
+<style>
+    .caption.product-caption {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 200px; /* Adjust height as needed to fit your design */
+        padding: 15px;
+        background: #f9f9f9;
+        text-align: center;
+    }
+
+    .product-info {
+        margin-bottom: 10px;
+        flex-grow: 1; /* Allow product info to take available space */
+    }
+
+    .product-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .product-price {
+        color: #ff5722;
+        font-size: 1.5em;
+        font-weight: 700;
+    }
+
+    .product-action {
+        margin-top: 10px;
+    }
+
+    /* Hover effect for product container */
+    .product-item-container:hover {
+        transform: scale(1.05);
+    }
+
+    /* Hover effect for product item */
+    .product-item:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        transform: translateY(-7px);
+    }
+
+        /* Hover effect for product image */
+        .product-item:hover .product-image {
+            transform: scale(1.07);
+        }
+
+    /* Hover effect for 'Add to Cart' button */
+    .add-to-cart-btn:hover {
+        background: linear-gradient(135deg, #900C3F, #ff5722);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Pagination styling */
+    .pagination-container a,
+    .pagination-container span {
+        margin: 0 7px;
+        padding: 12px 18px;
+        color: #007bff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .pagination-container a:hover,
+        .pagination-container span.current {
+            background-color: #007bff;
+            color: white;
+        }
+
+    /* Product item styling */
+    .product-item {
+        height: 560px; /* Ensure enough height for content */
+        width: 270px;
+        border-radius: 15px;
+        background: #ffffff;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    /* Product image styling */
+    .product-image {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Product caption styling */
+    .product-caption {
+        padding: 20px;
+        text-align: center;
+        background: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 200px; /* Adjust height to ensure spacing */
+    }
+
+    /* Product name styling */
+    .product-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Product price styling */
+    .product-price {
+        color: #ff5722;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    /* 'Add to Cart' button styling */
+    .add-to-cart-btn {
+        background: linear-gradient(135deg, #C70039, #900C3F);
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Product availability styling */
+    .product-availability {
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    /* Text color for availability status */
+    .text-success {
+        color: #28a745;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    /* Pagination container styling */
+    .pagination-container {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    /* Product item container styling */
+    .product-item-container {
+        margin-bottom: 8px;
+        height: 560px; /* Ensure containers have enough height */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Ensures product item fills container */
+    .thumbnail.product-item {
+        height: 100%;
+    }
+</style>
+
+<div class="container">
+    <br />
+    @Html.PagedListPager(Model.ListofProducts, page => Url.Action("TabletFilter", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayItemSliceAndTotal = true })
+
+    <div class="row">
+        @foreach (var item in Model.ListofProducts)
+        {
+            <div class="col-md-3 col-xs-6 product-item-container">
+                <div class="thumbnail product-item">
+                    <a href="@Url.Action("ProductDetails", "Home", new { id = item.ProductID })">
+                        <img class="img-responsive product-image" title="Click to View Product detail" src="@item.ImageURL" style="height: 270px; width: 100%; object-fit: cover; border-bottom: 2px solid #f1f1f1; transition: transform 0.3s ease-in-out;" />
+                    </a>
+
+                    <div class="caption product-caption">
+                        <div class="product-info">
+                            <h5 class="product-name">@item.Name</h5>
+                            <p class="product-price">@item.Price /-</p>
+                        </div>
+                        <div class="product-action">
+                            @if (item.StockQuantity > 0)
+                            {
+                                using (Html.BeginForm("TabletFilterAddToCart", "Home", new { productId = item.ProductID }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn add-to-cart-btn">
+                                        <i class="fa fa-shopping-cart"></i> Add to Cart
+                                    </button>
+                                }
+                                <p class="product-availability text-success">Available</p>
+                            }
+                            else
+                            {
+                                <p class="product-availability text-danger">Not Available</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+</div>
+<br />
+<br />
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>

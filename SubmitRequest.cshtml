@@ -1,0 +1,134 @@
+﻿@model Techify.Models.SellerRequest
+
+@{
+    ViewBag.Title = "Become a Seller";
+    Layout = "~/Views/Shared/FilterLayout.cshtml";
+}
+
+<div class="container mt-5" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+    <div class="row justify-content-center" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+        <div class="col-lg-8 col-md-10 col-sm-12" style="max-width: 600px; width: 100%;">
+            <div class="card shadow-sm border-light rounded-lg overflow-hidden" style="width: 100%; margin: 0 auto;">
+                <div class="card-header bg-dark text-white text-center">
+                    <h2 class="card-title mb-0" style="color:white;">Become a Seller</h2>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("SubmitRequest", "Home", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, new { @class = "form-label" })
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNumber, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BranchName, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.BranchName, new { @class = "form-control" })
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-danger btn-lg">Submit Request</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+
+<style>
+    /* Container settings */
+    .container {
+        max-width: 100%;
+        padding: 0 15px;
+        justify-content: center;
+    }
+
+    /* Card settings */
+    .card {
+        margin-left: 30%;
+        border-radius: 10px;
+        border: 1px solid #e3e3e3;
+        transition: box-shadow 0.3s ease-in-out;
+        margin: 0 auto;
+    }
+
+    .card-header {
+        background-color: #333;
+        border-bottom: 3px solid #dc3545;
+        padding: 1.5rem;
+        color: #fff;
+    }
+
+    .card-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+    }
+
+    .card-body {
+        padding: 2.5rem;
+    }
+
+    /* Form group settings */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Label styling */
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    /* Input styling */
+    .form-control {
+        border-radius: 0.5rem;
+        box-shadow: none;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+    /* Button styling */
+    .btn-danger {
+        border-radius: 0.5rem;
+        padding: 1rem 1.5rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    /* Center text */
+    .text-center {
+        text-align: center;
+    }
+</style>

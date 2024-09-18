@@ -1,0 +1,345 @@
+﻿@model Techify.Models.Product
+
+@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/FilterLayout.cshtml";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @Html.Raw(TempData["SuccessMessage"].ToString())
+    </div>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Techify</title>
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="../../User_Template/css/style.css" />
+
+    <!-- Include CSS for star rating -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-title {
+            text-align: center;
+            width: 100%;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .product-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 50%;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .product-image img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+            max-width: 50%;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+            .product-details h2, .product-details p {
+                margin: 0 0 15px;
+            }
+
+            .product-details label {
+                font-weight: bold;
+                color: #333;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .product-details .description {
+                font-size: 18px;
+                color: #555;
+                margin-bottom: 20px;
+            }
+
+            .product-details .price {
+                font-size: 24px;
+                color: #dc3545;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
+            .product-details .availability {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+        .btn-custom {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            margin: 0 auto;
+        }
+
+            .btn-custom:hover {
+                background-color: #a71c1c;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+            .btn-danger:hover {
+                background-color: #a71c1c;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+        .btn-outline-danger {
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            background-color: transparent;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #dc3545;
+                color: white;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+        .review-card {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+        }
+
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+            .rating > input {
+                display: none;
+            }
+
+            .rating > label {
+                display: inline-block;
+                position: relative;
+                width: 1.5em;
+                cursor: pointer;
+                font-size: 1.5em;
+                color: #dc3545;
+            }
+
+                .rating > label:before {
+                    content: "\2605";
+                    position: absolute;
+                    opacity: 0;
+                }
+
+                .rating > label:hover:before,
+                .rating > label:hover ~ label:before {
+                    opacity: 1 !important;
+                }
+
+            .rating > input:checked ~ label:before {
+                opacity: 1;
+            }
+
+            .rating > input:checked ~ label:hover:before,
+            .rating > input:checked ~ label:hover ~ label:before,
+            .rating > input:checked ~ label:hover ~ label:hover ~ label:before {
+                opacity: 0.4;
+            }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #dc3545;
+                box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+            }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+            .back-btn:hover {
+                text-decoration: underline;
+                color: #0056b3;
+            }
+
+        .login-link {
+            color: red;
+            text-decoration: none;
+        }
+
+            .login-link:hover {
+                text-decoration: underline;
+                color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-title">
+            <h2>@Model.Name</h2>
+        </div>
+        <div class="product-container">
+            <div class="product-image">
+                <img src="@Model.ImageURL" alt="@Model.Name" class="img-responsive" style="height: 400px; width: 400px;" />
+            </div>
+            <div class="product-details">
+                <div>
+                    <label>Description:</label>
+                    <p class="description">@Model.Description</p>
+                    <label>Price:</label>
+                    <p class="price">@Model.Price /-</p>
+                </div>
+                <div class="availability">
+                    @if (Model.StockQuantity > 0)
+                    {
+                        using (Html.BeginForm("AddToCart", "Home", new { productId = Model.ProductID }, FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-custom">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        }
+                        <p style="color: green; margin-top: 10px;">Available</p>
+                    }
+                    else
+                    {
+                        <p style="color: red; margin-top: 10px;">Not Available</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <h3>Reviews</h3>
+        @foreach (var review in Model.Reviews)
+        {
+            <div class="panel panel-default review-card">
+                <div class="panel-body">
+                    <h4>Rating: @review.Rating</h4>
+                    <div class="rating">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            if (i < review.Rating)
+                            {
+                                <label><i class="fas fa-star"></i></label>
+                            }
+                            else
+                            {
+                                <label><i class="far fa-star"></i></label>
+                            }
+                        }
+                    </div>
+                    <p>@review.Comment</p>
+                </div>
+            </div>
+        }
+
+        @if (Session["Status"] != null)
+        {
+            using (Html.BeginForm("AddReview", "Home", new { productId = Model.ProductID }, FormMethod.Post))
+            {
+                <div class="form-group">
+                    <h3>Add a Review</h3>
+                    <label for="rating">Rating:</label>
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"><i class="far fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><i class="far fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"><i class="far fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"><i class="far fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"><i class="far fa-star"></i></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment:</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">Submit Review</button>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-danger">Back to Products</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="d-flex justify-content-between">
+                <p>You must be logged in to add a review. <a href="@Url.Action("Customer_Login", "Account")" class="login-link">Login here</a></p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-danger">Back to Products</a>
+            </div>
+        }
+    </div>
+</body>
+</html>
