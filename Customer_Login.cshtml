@@ -1,0 +1,127 @@
+﻿@model Techify.Models.Customer_Login
+
+@{
+    ViewBag.Title = "Customer Login";
+    Layout = null;
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('/images/login_bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(50, 50, 50, 0.8); /* Dark gray, close to black */
+            color: white; /* Change text color to white for better contrast */
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            height: 500px; /* Increased height */
+        }
+
+        .user-icon img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 1rem;
+        }
+
+        .btn-login {
+            background-color: red;
+            color: white;
+            width: 50%; /* Slightly smaller width */
+            font-size: 1.25rem; /* Make the button larger */
+            display: block;
+            margin: 0 auto;
+            border-radius: 40px 40px 40px 40px;
+        }
+
+        .btn-signup {
+            background-color: transparent;
+            color: red;
+            border: 1px solid red;
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+        }
+
+        .btn-back {
+            background-color: transparent;
+            color: blue;
+            border: 1px solid blue;
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="user-icon">
+            <img src="~/images/icon.jpg" alt="User Icon" />
+        </div>
+        <h4 class="text-center">Customer Login</h4>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter your Email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter your Password" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+
+                <div class="form-group row">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="Login" class="btn btn-login" />
+                    </div>
+                </div>
+            </div>
+        }
+        <a href="@Url.Action("Customer_Signup", "Account")" class="btn btn-signup">Sign Up</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-back">Back</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

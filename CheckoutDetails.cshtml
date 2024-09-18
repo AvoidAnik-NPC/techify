@@ -1,0 +1,168 @@
+﻿@using Techify.Models.Home;
+@{
+    ViewBag.Title = "CheckoutDetails";
+    Layout = "~/Views/Shared/FilterLayout.cshtml";
+}
+
+<style>
+    .checkout-title {
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        text-align: center;
+        color: #fff;
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+    }
+
+    .checkout-container {
+        margin: 15px auto;
+        max-width: 1000px; /* Wider table for better layout */
+        padding: 2rem;
+    }
+
+    .checkout-card {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .checkout-card-header {
+        background-color: #333;
+        color: #fff;
+        padding: 1rem;
+        border-bottom: 3px solid #dc3545;
+        text-align: center;
+    }
+
+    .checkout-table {
+        width: 98%;
+        margin-bottom: 30px;
+        margin-left: 5px;
+        border: 1px solid #ddd;
+        font-family: 'Verdana', sans-serif;
+        background-color: #fff;
+    }
+
+        .checkout-table th, .checkout-table td {
+            text-align: left;
+            padding: 12px;
+            font-size: 1.1em;
+        }
+
+        .checkout-table th {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .checkout-table tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+    .fa {
+        margin: 0 10px;
+        color: #5cb85c;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 1.2em;
+    }
+
+    .fa-minus {
+        color: #d9534f;
+    }
+
+    .btn-success {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        color: #fff;
+        padding: 12px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'Arial', sans-serif;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #4cae4c;
+        }
+
+    .line-total {
+        font-weight: bold;
+    }
+</style>
+
+
+
+@*<h2 class="checkout-title">Order Details</h2>*@
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (Session["cart"] == null)
+{
+    <div class="alert alert-danger">
+        <strong>No product added to cart!</strong>
+    </div>
+}
+else
+{
+    <div class="checkout-container">
+        <div class="checkout-card">
+            <div class="checkout-card-header">
+                <h2 class="card-title mb-0" style="color:white;text-align:center;">Checkout Details</h2>
+            </div>
+            <br />
+
+            <table class="table table-bordered checkout-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Line Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int Total = 0;
+                    }
+
+                    @foreach (var item in (List<Item>)Session["cart"])
+                    {
+                        int lineTotal = Convert.ToInt32(item.Quantity * item.Product.Price);
+                        Total = Convert.ToInt32(Total + lineTotal);
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Price</td>
+                            <td>@item.Quantity</td>
+                            <td class="line-total">@lineTotal</td>
+
+                            <td>
+                                <a href="@Url.Action("IncreaseQty2", "Home", new { productId = item.Product.ProductID })" class="fa fa-plus"></a>
+                                <a href="@Url.Action("DecreaseQty2", "Home", new { productId = item.Product.ProductID })" class="fa fa-minus"></a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4" class="text-right"><b>Total: @Total</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <a class="btn btn-success"style="background-color:#dc3545" href="@Url.Action("FormFillUp", "Home")">Confirm Order >></a>
+    </div>
+    <br />
+    <br />
+}

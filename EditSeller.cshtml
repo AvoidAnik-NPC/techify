@@ -1,0 +1,139 @@
+﻿@model Techify.Models.SellerDetails
+
+@{
+    ViewBag.Title = "EditSeller";
+    Layout = null;
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    body {
+        background: url('/images/editbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #333; /* Darker text color */
+    }
+
+    .card {
+        background-color: rgba(255, 255, 255, 0.9); /* Light card background for better readability */
+        border: 1px solid #e0e0e0; /* Light border for a subtle outline */
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 50px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        color: #333; /* Darker text for better readability */
+    }
+
+    .card-header {
+        background-color: #007bff; /* Blue color for card header */
+        color: #fff; /* White text color for card header */
+        border-bottom: 1px solid #0056b3; /* Slightly darker blue border at the bottom */
+        border-radius: 10px 10px 0 0; /* Rounded corners for the top */
+        padding: 15px 20px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        background-color: #fff; /* White background for form fields */
+        color: #333; /* Darker text color for form fields */
+        border: 2px solid #E3FAFF; /* Blue border for form fields */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for input fields */
+        transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for border and shadow */
+    }
+
+        .form-control::placeholder {
+            color: #aaa; /* Lighter placeholder text */
+        }
+
+        .form-control:focus {
+            border-color: #0056b3; /* Darker blue border on focus */
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); /* Blue shadow on focus */
+        }
+
+    .form-group label {
+        color: #007bff; /* Blue color for labels */
+        font-weight: bold; /* Bold text for labels */
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Blue color for primary button */
+        border: none;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+    .btn-secondary {
+        background-color: #dc3545; /* Red color for secondary button */
+        border: none;
+        color: #fff;
+    }
+
+        .btn-secondary:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Edit Seller</h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("SaveSeller", "Admin", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => m.SellerID)
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter seller name" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter email address" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(m => m.Address)
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Enter address" })
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(m => m.PhoneNumber)
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Enter phone number" })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(m => m.BranchName)
+                            @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", placeholder = "Enter branch name" })
+                            @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger mt-1" })
+                        </div>
+
+                        <div class="form-group d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary me-2">Save</button>
+                            <a href="@Url.Action("Sellers", "Admin")" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

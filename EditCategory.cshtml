@@ -1,0 +1,113 @@
+﻿@model Techify.Models.CategoryDetails
+@{
+    ViewBag.Title = "EditCategory";
+    Layout = null;
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    body {
+        background: url('/images/editbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #333;
+    }
+
+    .card {
+        background-color: #ffffff; /* Clean white card background */
+        border: 1px solid #dee2e6; /* Subtle border for a polished look */
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 50px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly pronounced shadow */
+        color: #333; /* Darker text for better readability */
+    }
+
+    .card-header {
+        background-color: #007bff; /* Blue color for card header */
+        color: #fff; /* White text color for card header */
+        border-bottom: 1px solid #0056b3; /* Slightly darker blue border for the header */
+        border-radius: 10px 10px 0 0; /* Rounded corners for the top */
+        padding: 15px 20px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        background-color: #fff; /* White background for form fields */
+        color: #333; /* Darker text color for form fields */
+        border: 2px solid #ADD8E6; /* Blue border for form fields */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for input fields */
+        transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for border and shadow */
+    }
+
+        .form-control::placeholder {
+            color: #aaa; /* Lighter placeholder text */
+        }
+
+        .form-control:focus {
+            border-color: #0056b3; /* Darker blue border on focus */
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); /* Blue shadow on focus */
+        }
+
+    .form-group label {
+        color: #007bff; /* Blue color for labels */
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Blue color for primary button */
+        border: none;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+    .btn-secondary {
+        background-color: #dc3545; /* Red color for secondary button */
+        border: none;
+        color: #fff;
+    }
+
+        .btn-secondary:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Edit Category</h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(model => model.CategoryID)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CategoryName)
+                            @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control", placeholder = "Enter category name" })
+                            @Html.ValidationMessageFor(model => model.CategoryName)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description)
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 4, placeholder = "Enter description" })
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a href="@Url.Action("Categories", "Admin")" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

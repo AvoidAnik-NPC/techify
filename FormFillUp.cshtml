@@ -1,0 +1,160 @@
+﻿@model Techify.Models.Order
+@using Techify.Models.Home;
+@{
+    ViewBag.Title = "FormFillUp";
+    Layout = "~/Views/Shared/FilterLayout.cshtml";
+}
+
+<style>
+    .form-title-label {
+        display: block;
+        background-color: #000;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .form-container {
+        margin: 15px auto;
+        max-width: 1200px; /* Increased width for a wider card view */
+        padding: 2rem;
+    }
+
+    .form-card {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: #fff;
+        padding: 20px; /* Increased padding for more space inside the card */
+        display: flex;
+        flex-direction: column;
+       /* align-items: center;*/
+    }
+
+    .form-horizontal .form-group {
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .form-horizontal .control-label {
+        font-size: 1.3em;
+        font-family: 'Verdana', sans-serif;
+        color: #333;
+        display: flex; /* Ensure the label text is fully visible */
+        justify-content: flex-start;
+        width: 100%; /* Ensuring full label visibility */
+    }
+
+    .form-control {
+        border-radius: 4px;
+        font-size: 1.2em;
+        padding: 15px;
+        width: 125%; /* Ensure inputs take up full width */
+    }
+
+    .text-danger {
+        color: #d9534f;
+    }
+
+    .btn-success {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        color: #fff;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 20px auto 0; /* Adjusted margin for spacing */
+        cursor: pointer;
+        border-radius: 4px;
+        justify-content:center;
+        font-family: 'Arial', sans-serif;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #4cae4c;
+        }
+</style>
+
+<div class="form-container">
+    <div class="form-card">
+        <label class="form-title-label">Fill in Your Details</label>
+        @using (Html.BeginForm("ConfirmOrder", "Home", FormMethod.Post))
+        {
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShippingAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ShippingAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ShippingAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PaymentMethod, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <br />
+                    <br />
+                    <div class="col-md-10">
+                        <div class="payment-methods">
+                            @Html.RadioButtonFor(model => model.PaymentMethod, "Bkash", new { id = "bkash", @class = "d-none" })
+                            <label for="bkash" class="payment-method">
+                                <img src="~/images/bkash.jpg" alt="Bkash" class="img-fluid" />
+                                <h5>      Bkash</h5>
+                            </label>
+
+                            @Html.RadioButtonFor(model => model.PaymentMethod, "Credit Card", new { id = "creditCard", @class = "d-none" })
+                        <label for="creditCard" class="payment-method">
+                            <img src="~/images/credit.jpg" alt="Credit Card" class="img-fluid" />
+                            <h5>  Credit Card</h5>
+                        </label>
+
+                            @Html.RadioButtonFor(model => model.PaymentMethod, "Cash", new { id = "cash", @class = "d-none" })
+                        <label for="cash" class="payment-method">
+                            <img src="~/images/cash.jpg" alt="Cash" class="img-fluid" />
+                            <h5 >      Cash</h5>
+                        </label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.PaymentMethod, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Finish Order >>" class="btn btn-success" style="background-color:#dc3545" />
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .payment-methods {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .payment-method {
+        display: block;
+        width: 150px; /* Width of the image */
+        height: 80px; /* Height of the image */
+        position: relative;
+        cursor: pointer;
+    }
+
+        .payment-method img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .d-none {
+        display: none;
+    }
+
+</style>
